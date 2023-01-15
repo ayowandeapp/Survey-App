@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -22,6 +23,31 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+        $token = $user->createToken('main')->plainTextToken;
+        return response()->json(['user' => $user , 'token' =>$token]);
+
+
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email|string|exists:users,email',
+            'password' => [
+                'required'
+                ],
+            'remember' => 'boolean'
+            ]);
+        //get the remember value if exist, else set it to false
+        $remember = $data['remember'] ?? false;
+        unset($data['remember']); //destroy the variable
+
+        if(!Auth::attempt($data, $remember)) {
+            return response()->json([
+                'error' => 'The provided credentials are not correct'], 422);
+
+        }
+        $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
         return response()->json(['user' => $user , 'token' =>$token]);
 
