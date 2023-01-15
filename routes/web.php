@@ -17,6 +17,3 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['middleware' => 'cors'], function(){
-    Route::post('/register', [AuthController::class, 'register'])->middleware('cors');
-});

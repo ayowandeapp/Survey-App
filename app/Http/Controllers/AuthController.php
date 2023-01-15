@@ -18,6 +18,7 @@ class AuthController extends Controller
                 'required', 'confirmed', //Password::min(8)->mixedCase()->numbers()->symbols()
                 ]
             ]);
+        /** @var App\Models\User $user */
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -45,13 +46,18 @@ class AuthController extends Controller
         if(!Auth::attempt($data, $remember)) {
             return response()->json([
                 'error' => 'The provided credentials are not correct'], 422);
-
         }
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
         return response()->json(['user' => $user , 'token' =>$token]);
-
-
+    }
+    public function logout()
+    {
+        /** @var App\Models\User $user */
+        $user = Auth::user();
+        //echo $user; die;
+        $user->tokens()->delete();
+        return response()->json(['success' => true]);
     }
 
 
