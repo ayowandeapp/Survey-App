@@ -1,15 +1,15 @@
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import {mapState} from 'vuex'
+// import HelloWorld from './components/HelloWorld.vue'
+// import {mapState} from 'vuex'
 export default{
   computed:{
-    ...mapState({
-      user: (state) => state.user
+    // ...mapState({
+    //   user: (state) => state.user
 
-    })
+    // })
   },
   components:{
-    HelloWorld
+    // HelloWorld
   }
 
 }
