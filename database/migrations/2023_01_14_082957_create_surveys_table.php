@@ -20,6 +20,7 @@ class CreateSurveysTable extends Migration
             $table->string('slug', 1000);
             $table->tinyInteger('status');
             $table->text('description')->nullable();
+            $table->string('image', 1000)->nullable();
             $table->timestamps();
             $table->timestamp('expire_date')->nullable();
         });

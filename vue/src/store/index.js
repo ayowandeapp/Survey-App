@@ -1,6 +1,151 @@
 import {createStore} from 'vuex';
 import axiosClient from './../axios';
 
+const tmpSurveys = [
+	{
+		id: 100,
+		title: 'simple title',
+		slug: 'simple slug',
+		status: 'draft',
+		image: '',
+		description: 'my name is ayowande .<br> i am a web developer with 3+ years of experience',
+		created_at: '2023-01-15 13:00:00',
+		updated_at: '2023-01-15 13:00:00',
+		expire_date: '2023-01-15 13:00:00',
+		questions:[
+			{
+				id:1,
+				type: "select",
+				question:"from which country are you?",
+				description: null,
+				data: {
+					options: [
+						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Nigeria"},
+						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"USA"},
+						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Poland"},
+						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"India"},
+					]
+				},
+
+			},
+			{
+				id:2,
+				type: "checkbox",
+				question:"which language do you code in?",
+				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+				data: {
+					options: [
+						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Java"},
+						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"PHP"},
+						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Python"},
+						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"C#"},
+					]
+				},
+
+			},
+			{
+				id:3,
+				type: "checkbox",
+				question:"which PHP framework do you prefer?",
+				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+				data: {
+					options: [
+						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Codeigniter"},
+						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Symfony"},
+						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel"},
+						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Vii2"},
+					]
+				},
+
+			},
+			{
+				id:4,
+				type: "radio",
+				question:"which Laravel framwork do you work with",
+				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+				data: {
+					options: [
+						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Laravel 5.8"},
+						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Laravel 6"},
+						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel 7"},
+						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Laravel 8"},
+					]
+				},
+
+			},
+			{
+				id:5,
+				type: "checkbox",
+				question:"your favorite Api development?",
+				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+				data: {
+					options: [
+						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Rest API"},
+						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"TDD"},
+						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"DDD"},
+						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"All of the above"},
+					]
+				},
+
+			},
+
+			{
+				id:6,
+				type: "text",
+				question:"what's your favorite youtube channel?",
+				description: null,
+				data: {},
+			},
+
+			{
+				id:7,
+				type: "textarea",
+				question:"what do you think about this channel?",
+				description: "write your honest opinion.",
+				data: {},
+			},
+
+		]
+	},
+	{
+		id: 200,
+		title: 'Vue 3 title',
+		slug: 'vue-3',
+		status: 'active',
+		image: '',
+		description: 'random content .<br> i am a web developer with 3+ years of experience',
+		created_at: '2023-05-15 13:00:00',
+		updated_at: '2023-05-15 13:00:00',
+		expire_date: '2023-05-15 13:00:00',
+		questions:[],
+	},
+
+	{
+		id: 300,
+		title: 'Laravel 8 title',
+		slug: 'Laravel-8',
+		status: 'active',
+		image: '',
+		description: 'laravel-mix content .<br> i am a web developer with 3+ years of experience',
+		created_at: '2023-08-15 13:00:00',
+		updated_at: '2023-08-15 13:00:00',
+		expire_date: '2023-08-15 13:00:00',
+		questions:[],
+	},
+	{
+		id: 400,
+		title: 'Tailwind 3 title',
+		slug: 'tailwind-3',
+		status: 'active',
+		image: '',
+		description: 'tailwind css content .<br> i am a web developer with 3+ years of experience',
+		created_at: '2023-04-15 13:00:00',
+		updated_at: '2023-04-15 13:00:00',
+		expire_date: '2023-04-15 13:00:00',
+		questions:[],
+	},
+]
+
 const store = createStore({
 	modules:{
 
@@ -12,8 +157,9 @@ const store = createStore({
 		user: {
 			data:{},
 			token: sessionStorage.getItem('TOKEN'),
-		}
-
+		},
+		surveys: [...tmpSurveys],
+		questionTypes: ['text', 'select', 'radio', 'checkbox', 'textarea'],
 	},
 	mutations:{
 		logout(state){
@@ -25,9 +171,7 @@ const store = createStore({
 			state.user.token = userData.token;
 			state.user.data = userData.user;
 			sessionStorage.setItem('TOKEN', userData.token);
-
 		}
-
 	},
 	actions:{
 		register({commit}, user){
@@ -37,7 +181,6 @@ const store = createStore({
 					console.log(data);
 					return data;
 			});
-
 		},
 		login({commit}, user){
 			return axiosClient.post('/login',user)
@@ -46,7 +189,6 @@ const store = createStore({
 					console.log(data);
 					return data;
 			});
-
 		},
 		logout({commit}){
 			return axiosClient.post('/logout')
@@ -55,9 +197,7 @@ const store = createStore({
 					console.log(response);
 					return response;
 			});
-
 		},
-		
 	}
 })
 export default store;
