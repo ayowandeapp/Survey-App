@@ -171,6 +171,20 @@ const store = createStore({
 			state.user.token = userData.token;
 			state.user.data = userData.user;
 			sessionStorage.setItem('TOKEN', userData.token);
+		},
+		saveSurvey(state, survey){
+			//add the new saved survey data to the existing survey datas
+			state.surveys = [...state.surveys, survey.data];
+
+		},
+		updateSurvey(state, survey){
+			state.surveys = state.surveys.map((s)=>{
+				if(s.id == survey.data.id){
+					return survey.data;
+				}
+				return s;
+			});
+
 		}
 	},
 	actions:{
@@ -197,6 +211,25 @@ const store = createStore({
 					console.log(response);
 					return response;
 			});
+		},
+		saveSurvey({commit}, survey){
+			delete survey.image_url;
+			let response;
+			//if the survey had id it means we are makingv an update .i.e a put request
+			if(survey.id){
+				response = axiosClient.put('/survey/${survey.id}', survey).then((res)=>{
+					console.log(res.data);
+					commit('updateSurvey', res.data);
+					return res;
+				});
+			} else {
+				response = axiosClient.post('/survey', survey).then((res)=>{
+					console.log(res.data);
+					commit('saveSurvey', res.data);
+					return res;
+				});
+			}
+			return response;
 		},
 	}
 })
