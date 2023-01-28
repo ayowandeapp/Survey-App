@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use URL;
 
 class SurveyResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class SurveyResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
+            'image_url' => $this->image ? URL::to($this->image) : null,
             'status' => $this->status !== 'draft',//if status is not equal draft, true, else false
             'description' => $this->description,
             'created_at' => $this->created_at,

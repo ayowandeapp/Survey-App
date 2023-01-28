@@ -1,150 +1,150 @@
 import {createStore} from 'vuex';
 import axiosClient from './../axios';
 
-const tmpSurveys = [
-	{
-		id: 100,
-		title: 'simple title',
-		slug: 'simple slug',
-		status: 'draft',
-		image: '',
-		description: 'my name is ayowande .<br> i am a web developer with 3+ years of experience',
-		created_at: '2023-01-15 13:00:00',
-		updated_at: '2023-01-15 13:00:00',
-		expire_date: '2023-01-15 13:00:00',
-		questions:[
-			{
-				id:1,
-				type: "select",
-				question:"from which country are you?",
-				description: null,
-				data: {
-					options: [
-						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Nigeria"},
-						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"USA"},
-						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Poland"},
-						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"India"},
-					]
-				},
+// const tmpSurveys = [
+// 	{
+// 		id: 100,
+// 		title: 'simple title',
+// 		slug: 'simple slug',
+// 		status: 'draft',
+// 		image: '',
+// 		description: 'my name is ayowande .<br> i am a web developer with 3+ years of experience',
+// 		created_at: '2023-01-15 13:00:00',
+// 		updated_at: '2023-01-15 13:00:00',
+// 		expire_date: '2023-01-15 13:00:00',
+// 		questions:[
+// 			{
+// 				id:1,
+// 				type: "select",
+// 				question:"from which country are you?",
+// 				description: null,
+// 				data: {
+// 					options: [
+// 						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Nigeria"},
+// 						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"USA"},
+// 						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Poland"},
+// 						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"India"},
+// 					]
+// 				},
 
-			},
-			{
-				id:2,
-				type: "checkbox",
-				question:"which language do you code in?",
-				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
-				data: {
-					options: [
-						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Java"},
-						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"PHP"},
-						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Python"},
-						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"C#"},
-					]
-				},
+// 			},
+// 			{
+// 				id:2,
+// 				type: "checkbox",
+// 				question:"which language do you code in?",
+// 				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+// 				data: {
+// 					options: [
+// 						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Java"},
+// 						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"PHP"},
+// 						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Python"},
+// 						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"C#"},
+// 					]
+// 				},
 
-			},
-			{
-				id:3,
-				type: "checkbox",
-				question:"which PHP framework do you prefer?",
-				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
-				data: {
-					options: [
-						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Codeigniter"},
-						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Symfony"},
-						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel"},
-						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Vii2"},
-					]
-				},
+// 			},
+// 			{
+// 				id:3,
+// 				type: "checkbox",
+// 				question:"which PHP framework do you prefer?",
+// 				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+// 				data: {
+// 					options: [
+// 						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Codeigniter"},
+// 						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Symfony"},
+// 						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel"},
+// 						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Vii2"},
+// 					]
+// 				},
 
-			},
-			{
-				id:4,
-				type: "radio",
-				question:"which Laravel framwork do you work with",
-				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
-				data: {
-					options: [
-						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Laravel 5.8"},
-						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Laravel 6"},
-						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel 7"},
-						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Laravel 8"},
-					]
-				},
+// 			},
+// 			{
+// 				id:4,
+// 				type: "radio",
+// 				question:"which Laravel framwork do you work with",
+// 				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+// 				data: {
+// 					options: [
+// 						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Laravel 5.8"},
+// 						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"Laravel 6"},
+// 						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"Laravel 7"},
+// 						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"Laravel 8"},
+// 					]
+// 				},
 
-			},
-			{
-				id:5,
-				type: "checkbox",
-				question:"your favorite Api development?",
-				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
-				data: {
-					options: [
-						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Rest API"},
-						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"TDD"},
-						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"DDD"},
-						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"All of the above"},
-					]
-				},
+// 			},
+// 			{
+// 				id:5,
+// 				type: "checkbox",
+// 				question:"your favorite Api development?",
+// 				description: "When you add request interceptors, they are presumed to be asynchronous by default. This can cause a delay in the execution of your axios request when the main thread is blocked (a promise is created under the hood for the interceptor and your request gets put on the bottom of the call stack).",
+// 				data: {
+// 					options: [
+// 						{uuid:"DC8F892D-2EBD-447C-A4C8-T03058436FF4", text:"Rest API"},
+// 						{uuid:"RT7890PU-9HED-907C-N4C8-U03058436FF4", text:"TDD"},
+// 						{uuid:"DC8F892D-6EBD-4789C-R4C8-A03058436FF4", text:"DDD"},
+// 						{uuid:"T7J6892D-T56BD-447C-A4C8-O73058435T44", text:"All of the above"},
+// 					]
+// 				},
 
-			},
+// 			},
 
-			{
-				id:6,
-				type: "text",
-				question:"what's your favorite youtube channel?",
-				description: null,
-				data: {},
-			},
+// 			{
+// 				id:6,
+// 				type: "text",
+// 				question:"what's your favorite youtube channel?",
+// 				description: null,
+// 				data: {},
+// 			},
 
-			{
-				id:7,
-				type: "textarea",
-				question:"what do you think about this channel?",
-				description: "write your honest opinion.",
-				data: {},
-			},
+// 			{
+// 				id:7,
+// 				type: "textarea",
+// 				question:"what do you think about this channel?",
+// 				description: "write your honest opinion.",
+// 				data: {},
+// 			},
 
-		]
-	},
-	{
-		id: 200,
-		title: 'Vue 3 title',
-		slug: 'vue-3',
-		status: 'active',
-		image: '',
-		description: 'random content .<br> i am a web developer with 3+ years of experience',
-		created_at: '2023-05-15 13:00:00',
-		updated_at: '2023-05-15 13:00:00',
-		expire_date: '2023-05-15 13:00:00',
-		questions:[],
-	},
+// 		]
+// 	},
+// 	{
+// 		id: 200,
+// 		title: 'Vue 3 title',
+// 		slug: 'vue-3',
+// 		status: 'active',
+// 		image: '',
+// 		description: 'random content .<br> i am a web developer with 3+ years of experience',
+// 		created_at: '2023-05-15 13:00:00',
+// 		updated_at: '2023-05-15 13:00:00',
+// 		expire_date: '2023-05-15 13:00:00',
+// 		questions:[],
+// 	},
 
-	{
-		id: 300,
-		title: 'Laravel 8 title',
-		slug: 'Laravel-8',
-		status: 'active',
-		image: '',
-		description: 'laravel-mix content .<br> i am a web developer with 3+ years of experience',
-		created_at: '2023-08-15 13:00:00',
-		updated_at: '2023-08-15 13:00:00',
-		expire_date: '2023-08-15 13:00:00',
-		questions:[],
-	},
-	{
-		id: 400,
-		title: 'Tailwind 3 title',
-		slug: 'tailwind-3',
-		status: 'active',
-		image: '',
-		description: 'tailwind css content .<br> i am a web developer with 3+ years of experience',
-		created_at: '2023-04-15 13:00:00',
-		updated_at: '2023-04-15 13:00:00',
-		expire_date: '2023-04-15 13:00:00',
-		questions:[],
-	},
-]
+// 	{
+// 		id: 300,
+// 		title: 'Laravel 8 title',
+// 		slug: 'Laravel-8',
+// 		status: 'active',
+// 		image: '',
+// 		description: 'laravel-mix content .<br> i am a web developer with 3+ years of experience',
+// 		created_at: '2023-08-15 13:00:00',
+// 		updated_at: '2023-08-15 13:00:00',
+// 		expire_date: '2023-08-15 13:00:00',
+// 		questions:[],
+// 	},
+// 	{
+// 		id: 400,
+// 		title: 'Tailwind 3 title',
+// 		slug: 'tailwind-3',
+// 		status: 'active',
+// 		image: '',
+// 		description: 'tailwind css content .<br> i am a web developer with 3+ years of experience',
+// 		created_at: '2023-04-15 13:00:00',
+// 		updated_at: '2023-04-15 13:00:00',
+// 		expire_date: '2023-04-15 13:00:00',
+// 		questions:[],
+// 	},
+// ]
 
 const store = createStore({
 	modules:{
@@ -158,8 +158,15 @@ const store = createStore({
 			data:{},
 			token: sessionStorage.getItem('TOKEN'),
 		},
-		surveys: [...tmpSurveys],
+		surveys: {
+			loading: false,
+			data: {}
+		},
 		questionTypes: ['text', 'select', 'radio', 'checkbox', 'textarea'],
+		currentSurvey: {
+			loading: false,
+			data: {}
+		},
 	},
 	mutations:{
 		logout(state){
@@ -172,20 +179,19 @@ const store = createStore({
 			state.user.data = userData.user;
 			sessionStorage.setItem('TOKEN', userData.token);
 		},
-		saveSurvey(state, survey){
-			//add the new saved survey data to the existing survey datas
-			state.surveys = [...state.surveys, survey.data];
+		setCurrentSurvey(state, survey){
+			state.currentSurvey.data = survey.data;
 
 		},
-		updateSurvey(state, survey){
-			state.surveys = state.surveys.map((s)=>{
-				if(s.id == survey.data.id){
-					return survey.data;
-				}
-				return s;
-			});
-
-		}
+		setCurrentSurveyLoading(state, loading){
+			state.currentSurvey.loading = loading;
+		},
+		setSurveys(state, surveys){
+			state.surveys.data = surveys.data;
+		},
+		setSurveysLoading(state, loading){
+			state.surveys.loading = loading;
+		},
 	},
 	actions:{
 		register({commit}, user){
@@ -212,24 +218,52 @@ const store = createStore({
 					return response;
 			});
 		},
+		getSurveys({commit}){
+			return axiosClient.get('/survey').then((res)=>{
+				console.log(res.data);
+				commit('setSurveys', res.data);
+				commit('setSurveysLoading', false);
+				return res.data;
+			}).catch((err)=>{
+				commit('setSurveysLoading', false);
+				throw err;
+			});
+
+		},
+		getSurvey({commit}, id){
+			commit('setCurrentSurveyLoading', true);
+			return axiosClient.get('/survey/'+id).then((res)=>{
+				console.log(res.data);
+				commit('setCurrentSurvey', res.data);
+				commit('setCurrentSurveyLoading', false);
+				return res.data;
+			}).catch((err)=>{
+				commit('setCurrentSurveyLoading', false);
+				throw err;
+			});
+		},
 		saveSurvey({commit}, survey){
 			delete survey.image_url;
 			let response;
 			//if the survey had id it means we are makingv an update .i.e a put request
 			if(survey.id){
-				response = axiosClient.put('/survey/${survey.id}', survey).then((res)=>{
+				response = axiosClient.put('/survey/'+survey.id, survey).then((res)=>{
 					console.log(res.data);
-					commit('updateSurvey', res.data);
+					commit('setCurrentSurvey', res.data);
 					return res;
 				});
 			} else {
 				response = axiosClient.post('/survey', survey).then((res)=>{
 					console.log(res.data);
-					commit('saveSurvey', res.data);
+					commit('setCurrentSurvey', res.data);
 					return res;
 				});
 			}
 			return response;
+		},
+		deleteSurvey({commit}, id){
+			return axiosClient.delete('/survey/'+id);
+
 		},
 	}
 })

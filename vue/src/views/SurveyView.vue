@@ -3,12 +3,15 @@
 		<template v-slot:header>
 			<div class="flex items-center justify-between">
 				<h1 class="text-3xl font-bold text-gray-900">
-					{{ model.id ? model.title : "create a survey" }}
+					{{ route.params.id ? model.title : "create a survey" }}
 				</h1>
+				<button v-if="route.params.id" type="button" class="py-2 px-3 text-white bg-red-500 rounded-md hover:border-red-100" @click="deleteSurvey()"> - Delete Survey
+				</button>
 			</div>
 		</template>
-		<pre>{{model}}</pre>
-		<form @submit.prevent="saveSurvey">
+		<!-- <pre>{{model}}</pre> -->
+		<div v-if="surveyLoading" class="flex">Loading...</div>
+		<form v-else @submit.prevent="saveSurvey">
 			<div class="shadow sm:overflow-hidden sm:rounded-md">
 				<div class="space-y-6 bg-white px-4 py-5 sm:p-6">
 					<!--image -->
@@ -62,7 +65,7 @@
 				           + Add new Question
 				        </button>
 						</h3>
-						<div v-if="!model.questions.length" class="text-center text-gray-600">
+						<div v-if="!model.questions" class="text-center text-gray-600">
 							You don't have any questions created
 						</div>
 						<div v-for="(question, index) in model.questions" :key="question.id">
@@ -70,11 +73,9 @@
 							<QuestionEditor :question="question" :index="index" @change="questionChange" @addQuestion="addQuestion" @deleteQuestion="deleteQuestion" />
 
 						</div>
-
 					</div>
-
                   	<div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-		              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Create</button>
+		              <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{{model.id ? 'Update' :'Create'}}</button>
 		            </div>
 
 				</div>
@@ -88,7 +89,7 @@
 
 <script setup>
 	import PageComponent from './PageComponent.vue';
-	import {ref} from 'vue';
+	import {ref, watch, computed} from 'vue';
 	import store from './../store';
 	import {useRoute, useRouter} from 'vue-router';
 	import QuestionEditor from './../components/editor/QuestionEditor.vue';
@@ -98,20 +99,31 @@
 
 	const router = useRouter();
 
+	const surveyLoading = computed(()=> store.state.currentSurvey.loading);
+
 	//create empty survey
 	let model = ref({
 		title:'',
 		status:false,
 		description: null,
-		image: null,
+		image_url: null,
 		expire_date: null,
 		questions:[]
 	});
-	if (route.params.id){
-		model.value = store.state.surveys.find((survey)=>{
-			return survey.id === parseInt(route.params.id);
+	//watch current survey data change and when this happens we update the model
+	watch(
+		()=>store.state.currentSurvey.data,
+		(newVal, oldVal)=>{
+			model.value = {
+				...JSON.parse(JSON.stringify(newVal)),
+				status: newVal.status != 'draft',
+
+			}
 
 		});
+
+	if (route.params.id){
+		model.value = store.dispatch('getSurvey', route.params.id);
 		console.log(model.value);
 	}
 	function onImageChoose(ev){
@@ -159,6 +171,16 @@
 			}
 			return q;
 		});
+
+	}
+	function deleteSurvey(){
+		if(confirm('Are you sure you want to delete this survey?')){
+			store.dispatch('deleteSurvey', route.params.id). then(()=>{
+				router.push({
+					name:"Surveys",
+				});
+			});
+		}
 
 	}
 </script>
