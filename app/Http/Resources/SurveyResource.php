@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use URL;
+use App\Http\Resources\SurveyQuestionResource;
 
 class SurveyResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class SurveyResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'expire_date' => $this->expire_date,
-            'questions' => []
+            'questions' => SurveyQuestionResource::collection($this->questions), //call the relationship 
         ];
     }
 }

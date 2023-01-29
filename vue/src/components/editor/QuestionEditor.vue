@@ -42,12 +42,12 @@
 				<button type="button" @click="addOption()" class="flex items-center text-xs py-1 px-2 rounded-sm text-white bg-gray-600 hover:bg-gray-700">+ Add Option
 				</button>
 			</h4>
-			<div v-if="!model.data.options.length" class="text-xs text-gray-600 text-center py-3">
+			<div v-if="!model.data.options" class="text-xs text-gray-600 text-center py-3">
 				you don't have any options defined
 			</div>
 			<div v-for="(option, index) in model.data.options" :key="option.uuid" class="flex items-center mb-1">
 				<span class="w-6 text-sm">{{ index +1 }}.</span>
-				<input type="text" v-model="option.text" @change="datachange" class="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500" />
+				<input type="text" v-model="option.text" @change="dataChange" class="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500" />
 				<button type="button" @click="removeOption(option)" class="flex items-center h-6 w-6 py-1 px-3 mr-2 rounded-sm transition-colors hover:border-red-100">
 					Del
 				</button>

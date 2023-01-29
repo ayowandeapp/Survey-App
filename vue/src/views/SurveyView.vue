@@ -61,11 +61,11 @@
                   	<div class="px-4 py-5 bg-white space-y-6 sm:p-6">
 						<h3 class="text-2xl font-semibold flex items-center justify-between">
 							Questions
-							<button type="button" class="py-1 px-2 text-white bg-emerald-500 rounded-sm hover:bg-emerald-600">
+							<button @click="addQuestion()" type="button" class="py-1 px-2 text-white bg-emerald-500 rounded-sm hover:bg-emerald-600">
 				           + Add new Question
 				        </button>
 						</h3>
-						<div v-if="!model.questions" class="text-center text-gray-600">
+						<div v-if="!model.questions.length" class="text-center text-gray-600">
 							You don't have any questions created
 						</div>
 						<div v-for="(question, index) in model.questions" :key="question.id">
@@ -139,6 +139,7 @@
 		reader.readAsDataURL(file);
 	}
 	function saveSurvey(){
+		console.log(model.value);
 		store.dispatch('saveSurvey', model.value).then(({ data }) => {
 			router.push({
 				name:'SurveyView',
