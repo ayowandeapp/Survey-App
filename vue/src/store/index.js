@@ -167,6 +167,11 @@ const store = createStore({
 			loading: false,
 			data: {}
 		},
+		notification: {
+			show: false,
+			message: null,
+			type: null
+		}
 	},
 	mutations:{
 		logout(state){
@@ -191,6 +196,15 @@ const store = createStore({
 		},
 		setSurveysLoading(state, loading){
 			state.surveys.loading = loading;
+		},
+		notify(state, {type, message}){
+			state.notification.show = true;
+			state.notification.type = type;
+			state.notification.message = message;
+			setTimeout(()=>{
+				state.notification.show = false;
+			}, 3000)
+			
 		},
 	},
 	actions:{

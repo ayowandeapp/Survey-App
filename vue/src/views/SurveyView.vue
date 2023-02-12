@@ -11,7 +11,7 @@
 		</template>
 		<!-- <pre>{{model}}</pre> -->
 		<div v-if="surveyLoading" class="flex">Loading...</div>
-		<form v-else @submit.prevent="saveSurvey">
+		<form v-else @submit.prevent="saveSurvey" class="opacity-0 animate-fade-in-down">
 			<div class="shadow sm:overflow-hidden sm:rounded-md">
 				<div class="space-y-6 bg-white px-4 py-5 sm:p-6">
 					<!--image -->
@@ -141,6 +141,10 @@
 	function saveSurvey(){
 		console.log(model.value);
 		store.dispatch('saveSurvey', model.value).then(({ data }) => {
+			store.commit('notify', {
+				type: 'success',
+				message: 'Survey was successfully updated',
+			})
 			router.push({
 				name:'SurveyView',
 				params:{id: data.data.id}
