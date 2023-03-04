@@ -35,3 +35,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user', function (Request $request) {
     return $request->user();
     });
+Route::get('/survey-by-slug/{survey:slug}',  [SurveyController::class, 'showForGuest']);
+
+Route::post('/survey/{survey}/answer',  [SurveyController::class, 'storeAnswer']);

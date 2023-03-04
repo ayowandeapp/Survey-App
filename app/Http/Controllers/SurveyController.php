@@ -13,6 +13,9 @@ use Illuminate\Validation\Rule;
 use App\Models\SurveyQuestion;
 use Illuminate\Support\Facades\validator;
 use Illuminate\Support\Arr;
+use App\Http\Requests\StoreSurveyAnswerRequest;
+use App\Models\SurveyAnswer;
+use App\Models\SurveyQuestionAnswer;
 
 class SurveyController extends Controller
 {
@@ -66,6 +69,40 @@ class SurveyController extends Controller
             return abort(403, 'Unauthorized action.');
         }
         return new SurveyResource($survey);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Survey  $survey
+     * @return \Illuminate\Http\Response
+     */
+    public function showForGuest(Survey $survey)
+    {
+        return new SurveyResource($survey);
+    }
+    public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
+    {
+        $validated = $request->validated();
+        $surveyAnswer = SurveyAnswer::create([
+            'survey_id' => $survey->id,
+            'state_date' => date('Y-m-d H:i:s'),
+            'end_date' => date('Y-m-d H:i:s'),
+        ]);
+        foreach ($validated['answers'] as $questionId => $answer) {
+            $question = SurveyQuestion::where(['id'=> $questionId, 'survey_id'=>$survey->id])->get();
+            if(!$question){
+                return response("invalid question ID", 400);
+            }
+            $data = [
+                'survey_question_id' => $questionId,
+                'survey_answer_id' => $surveyAnswer->id,
+                'answer'=>is_array($answer) ? json_encode($answer) : $answer,
+            ];
+            SurveyQuestionAnswer::create($data);
+        }
+        return response('', 201);
+
+
     }
 
     /**

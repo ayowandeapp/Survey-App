@@ -7,7 +7,11 @@
           <router-link :to="{name:'SurveyView', params: { id: survey.id } }" class="flex py-2 px-4 border border-transparent text-sm rounded-md text-white bg-indigo-600 hover-bg-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Edit
           </router-link>
-          <button v-if="survey.id"  type="button" @click="emit('delete',survey)">Delete</button>
+          <div class="flex items-center">
+            <a :href="`/view/survey/${survey.slug}`" target="_blank" class="h-8 w-8 flex items-center justify-center rounded-full border border-transparent text-sm text-indigo-500 focus focus:ring-offset-2 focus:ring-indigo-500">View</a>
+            <button v-if="survey.id"  type="button" @click="emit('delete',survey)">Delete</button>
+
+          </div>
         </div> 
       </div>
 </template>
