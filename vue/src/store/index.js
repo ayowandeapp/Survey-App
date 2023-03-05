@@ -158,6 +158,10 @@ const store = createStore({
 			data:{},
 			token: sessionStorage.getItem('TOKEN'),
 		},
+		dashboard:{
+			loading: false,
+			data:{}
+		},
 		surveys: {
 			loading: false,
 			links: [],
@@ -187,6 +191,13 @@ const store = createStore({
 		},
 		setCurrentSurvey(state, survey){
 			state.currentSurvey.data = survey.data;
+
+		},
+		dashboardLoading(state, loading){
+			state.dashboard.loading = loading;
+		},
+		setDashboardData(state, data){
+			state.dashboard.data = data
 
 		},
 		setCurrentSurveyLoading(state, loading){
@@ -234,6 +245,19 @@ const store = createStore({
 					console.log(response);
 					return response;
 			});
+		},
+		getDashboardData({commit}){
+			commit('dashboardLoading', true);
+			return axiosClient.get('/dashboard').then((res)=>{
+				console.log(res.data);
+				commit('setDashboardData', res.data);
+				commit('dashboardLoading', false);
+				return res.data;
+			}).catch((err)=>{
+				commit('dashboardLoading', false);
+				throw err;
+			});
+
 		},
 		getSurveys({commit}, {url = null} = {}){
 			url = url || '/survey';

@@ -7,7 +7,7 @@ use URL;
 use DateTime;
 use App\Http\Resources\SurveyQuestionResource;
 
-class SurveyResource extends JsonResource
+class SurveyResourceDashboard extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,11 +23,10 @@ class SurveyResource extends JsonResource
             'slug' => $this->slug,
             'image_url' => $this->image ? URL::to($this->image) : null,
             'status' => $this->status !== 'draft',//if status is not equal draft, true, else false
-            'description' => $this->description,
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
-            'updated_at' => (new DateTime($this->updated_at))->format('Y-m-d H:i:s'),
             'expire_date' => $this->expire_date,
-            'questions' => SurveyQuestionResource::collection($this->questions), //call the relationship 
+            'questions' => $this->questions()->count(), //call the relationship 
+            'answers' => $this->answers()->count(),
         ];
     }
 }
