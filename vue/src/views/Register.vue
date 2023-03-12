@@ -13,10 +13,21 @@
         <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Sign up to your account</h2>
         <p class="mt-2 text-center text-sm text-gray-600">
           Or
-          {{ ' ' }}
           <router-link :to="{name: 'Login'}" class="font-medium text-indigo-600 hover:text-indigo-500">Sigin here</router-link>
         </p>
     </div>
+    
+      <alert v-if="Object.keys(errors).length" class="flex-col items-stretch text-sm">
+        <div v-for="(field, i) of Object.keys(errors)" :key="i">
+          <div v-for="(error,ind) of errors[field] || []" :key="ind">
+            
+            . {{error}}
+          </div>
+
+        </div>
+        <span @click="errors=''" class="w-8 h-8 flex items-center justify-center rounded-full transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]">X</span>
+
+      </alert>
     <form class="mt-8 space-y-6" @submit="register">
         <input type="hidden" name="remember" value="true" />
         <div class="-space-y-px rounded-md shadow-sm">
@@ -39,9 +50,12 @@
         </div>
 
         <div>
-          <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <button :diabled="loading" type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+            </span>
+            <span v-if="loading">
+              circle 
             </span>
             Sign up
           </button>
@@ -51,9 +65,11 @@
 </template>
 
 <script setup>
-  import { LockClosedIcon } from '@heroicons/vue/20/solid'
-  import store from './../store'
-  import router from './../router'
+  import { LockClosedIcon } from '@heroicons/vue/20/solid';
+  import store from './../store';
+  import router from './../router';
+  import {ref} from 'vue';
+  import alert from './../components/Alert.vue';
 
   const user = {
     name: '',
@@ -61,11 +77,22 @@
     password:'',
     password_confirmation: ''
   };
+  const errors = ref({});
+  const loading = ref(false);
   function register(e){
     e.preventDefault();
+    loading.value = true;
     store.dispatch('register', user)
       .then((response) =>{
+        loading.value = false;
         router.push({ name: 'Dashboard' })
+      })
+      .catch(err=>{
+        if (err.response.status === 422){
+          loading.value = false;
+          errors.value = err.response.data.errors;
+        }
+
       })
   }
   
