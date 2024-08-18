@@ -84,6 +84,7 @@
       .catch((err) =>{
         console.log(err);
         errorMsg.value = err.response.data.message;
+        loginTitle.value = 'Login';
       })
   }
   

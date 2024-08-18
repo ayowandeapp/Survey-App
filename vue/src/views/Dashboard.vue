@@ -20,34 +20,37 @@
 			</div>
 			<div class="row-span order-3 lg:order-1 bg-white shadow-md p-4">
 				<h3 class="text-2xl font-semibold">Latest Survey</h3>
-				<img :src="data.latestSurvey.image_url" class="w-[240px] mx-auto" alt="" />
-				<h3> {{ data.latestSurvey.title }}</h3>
-				<div class="flex justify-between text-sm mb-1">
-					<div>Created Date:</div>
-					<div>{{ data.latestSurvey.created_at }}</div>
-				</div>
-				<div class="flex justify-between text-sm mb-1">
-					<div>Expire Date:</div>
-					<div>{{ data.latestSurvey.expire_date }}</div>
-				</div>
+				<div v-if="data.latestSurvey">
 
-				<div class="flex justify-between text-sm mb-1">
-					<div>Status:</div>
-					<div>{{ data.latestSurvey.status ? 'Active': 'Draft'}}</div>
-				</div>
-				<div class="flex justify-between text-sm mb-3">
-					<div> Questions:</div>
-					<div>{{ data.latestSurvey.questions }}</div>
-				</div>
-
-				<div class="flex justify-between text-sm mb-1">
-					<div> Answers:</div>
-					<div>{{ data.latestSurvey.answers }}</div>		
-				</div>
-				<div class="flex justify-between">
-					<router-link :to="{name:'SurveyView', params:{id:data.latestSurvey.id} }" class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit Survey</router-link>
-					<button :to="{name:'SurveyView', params:{id:data.latestSurvey.id} }" class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">View Answer</button>
-					
+					<img :src="data.latestSurvey.image_url" class="w-[240px] mx-auto" alt="" />
+					<h3> {{ data.latestSurvey.title }}</h3>
+					<div class="flex justify-between text-sm mb-1">
+						<div>Created Date:</div>
+						<div>{{ data.latestSurvey.created_at }}</div>
+					</div>
+					<div class="flex justify-between text-sm mb-1">
+						<div>Expire Date:</div>
+						<div>{{ data.latestSurvey.expire_date }}</div>
+					</div>
+	
+					<div class="flex justify-between text-sm mb-1">
+						<div>Status:</div>
+						<div>{{ data.latestSurvey.status ? 'Active': 'Draft'}}</div>
+					</div>
+					<div class="flex justify-between text-sm mb-3">
+						<div> Questions:</div>
+						<div>{{ data.latestSurvey.questions }}</div>
+					</div>
+	
+					<div class="flex justify-between text-sm mb-1">
+						<div> Answers:</div>
+						<div>{{ data.latestSurvey.answers }}</div>		
+					</div>
+					<div class="flex justify-between">
+						<router-link :to="{name:'SurveyView', params:{id:data.latestSurvey.id} }" class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Edit Survey</router-link>
+						<button :to="{name:'SurveyView', params:{id:data.latestSurvey.id} }" class="flex py-2 px-4 border border-transparent text-sm rounded-md text-indigo-500 hover:bg-indigo-700 hover:text-white transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">View Answer</button>
+						
+					</div>
 				</div>
 				
 			</div>
