@@ -1,4 +1,5 @@
 <script>
+
 // import HelloWorld from './components/HelloWorld.vue'
 // import {mapState} from 'vuex'
 export default{
@@ -10,7 +11,15 @@ export default{
   },
   components:{
     // HelloWorld
+  },
+  mounted(){
+    window.Echo.channel(`public.survey.notification`)
+    .listen('SurveyAnswered', (e) => {
+      console.log('got it');
+        console.log(e);
+    });
   }
+  
 
 }
 </script>
